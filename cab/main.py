@@ -3,10 +3,10 @@ from typing import Dict
 from fastapi import FastAPI
 
 from cab.helpers import Announcement
-from cab.settings import Settings
+from cab.settings import get_settings
 
 app = FastAPI()
-settings = Settings()
+settings = get_settings()
 
 
 ANNOUNCEMENTS: Dict[int, Announcement] = {}
