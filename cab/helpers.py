@@ -1,5 +1,6 @@
 import urllib
 from dataclasses import dataclass
+from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -24,7 +25,7 @@ class Announcement:
         return getattr(self, key.lower())
 
 
-async def parse_feed(current_id: int = -1) -> Announcement:
+async def parse_feed(current_id: int = -1) -> List[Announcement]:
     """Parse RSS feed and return announcements."""
 
     # Get RSS feed
