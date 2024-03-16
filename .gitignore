@@ -1,0 +1,4 @@
+# Python
+*.py[cod]
+.python-version
+pyrightconfig.json

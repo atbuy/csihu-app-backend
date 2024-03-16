@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cab"
+version = "0.1.0"
+description = "FastAPI backend to periodically parse CSIHU announcements"
+authors = ["atbuy <filip1253@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

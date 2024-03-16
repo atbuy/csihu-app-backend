@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: pretty-format-json
+        name: pretty format json
+        args: ["--autofix", "--indent", "4", "--no-sort-keys"]
+      - id: check-json
+        name: check json
+        types: [json]
+      - id: check-yaml
+        name: check yaml
+      - id: end-of-file-fixer
+        name: add new line to end of file
+      - id: trailing-whitespace
+        name: remove trailing whitespace
+      - id: name-tests-test
+        name: tests start with test_*
+        args: ["--pytest-test-first"]
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort
+        args: ["--profile=black"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.3
+    hooks:
+      - id: ruff
+      - id: ruff-format
