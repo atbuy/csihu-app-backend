@@ -2,3 +2,6 @@
 *.py[cod]
 .python-version
 pyrightconfig.json
+
+# Environment configuration
+.env*
