@@ -10,10 +10,11 @@ readme = "README.md"
 python = "^3.11"
 fastapi = "^0.110.0"
 uvicorn = {extras = ["standard"], version = "^0.28.0"}
-pydantic-settings = "^2.2.1"
+pydantic-settings = "^2.0.3"
 requests = "^2.31.0"
 beautifulsoup4 = "^4.12.3"
 lxml = "^5.1.0"
+redis-om = "^0.2.1"
 
 
 [build-system]

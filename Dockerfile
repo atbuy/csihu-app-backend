@@ -24,7 +24,7 @@ ENV PATH="$POETRY_HOME/bin:${PATH}"
 # Upgrade pip and setuptools
 RUN pip install --upgrade pip setuptools wheel && \
     # Install poetry
-    curl -sSL https://install.python-poetry.org | python3 - && \
+    pip install poetry && \
     # Install dependencies from poetry lock file
     poetry install --no-dev --no-interaction --no-ansi -vvv
 

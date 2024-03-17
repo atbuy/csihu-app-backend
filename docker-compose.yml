@@ -1,8 +1,32 @@
 version: "3.9"
 services:
   cab:
+    container_name: cab
+    network_mode: host
     build:
       context: .
-    container_name: cab
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
     ports:
       - "8000:8000"
+
+  redis:
+    image: redis:6.2-alpine
+    container_name: cab-redis
+    network_mode: host
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  cache:
+    driver: local
