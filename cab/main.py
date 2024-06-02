@@ -19,7 +19,7 @@ app.add_middleware(
 
 
 class Notifications:
-    PATH = "notifications"
+    PATH = "csihu/notifications"
 
     @app.get(f"/{PATH}")
     async def notifications():
