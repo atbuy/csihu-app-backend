@@ -38,6 +38,9 @@ class Notifications:
         length = len(announcements)
         limit = min(length, offset + amount)
         base = min(offset, length)
+        if base == length:
+            return {"status": 200, "message": "OK", "data": announcements}
+
         for i in range(base, limit):
             data.append(announcements[i])
 
