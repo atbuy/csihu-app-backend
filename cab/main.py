@@ -1,7 +1,7 @@
 from fastapi import BackgroundTasks, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from cab.helpers import populate_cache
+from cab.helpers import get_all_announcements, populate_cache
 from cab.models import AnnouncementModel
 from cab.settings import get_settings
 
@@ -22,27 +22,37 @@ class Notifications:
     PATH = "csihu/notifications"
 
     @app.get(f"/{PATH}")
-    async def notifications():
-        """View current announcements."""
+    async def notifications(amount: int = 100, offset: int = 0):
+        """View current announcements.
 
-        announcements = AnnouncementModel.all_pks()
+        Sends the default amount of posts if no request parameters are given.
+        If parameters are passed, the selection happens on the top <amount> items.
+        """
 
-        data = [AnnouncementModel.get(ann) for ann in announcements]
-        sorted_data = sorted(data, key=lambda ann: ann.id, reverse=True)
+        # Get sorted announcements
+        announcements = get_all_announcements()
 
-        return {"status": 200, "message": "OK", "data": sorted_data}
+        # Safely keep only the `amount` announcements,
+        # using the `offset` to get the next ones.
+        data = []
+        length = len(announcements)
+        limit = min(length, offset + amount)
+        base = min(offset, length)
+        for i in range(base, limit):
+            data.append(announcements[i])
+
+        return {"status": 200, "message": "OK", "data": data}
 
     @app.get(f"/{PATH}/" "{announcement_id}")
     async def notification_detail(announcement_id: int):
         """View a specific announcement."""
 
-        announcements = AnnouncementModel.all_pks()
+        announcements = get_all_announcements()
 
         announcement = None
         for ann in announcements:
-            model = AnnouncementModel.get(ann)
-            if model.id == announcement_id:
-                announcement = model
+            if ann.id == announcement_id:
+                announcement = ann
                 break
 
         return {"status": 200, "message": "OK", "data": announcement}

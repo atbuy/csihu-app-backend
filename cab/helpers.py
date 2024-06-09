@@ -1,6 +1,7 @@
 import time
 import urllib
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import List
 
 import requests
@@ -103,7 +104,10 @@ def get_webdriver() -> webdriver.Remote:
     return webdriver.Remote(remote, options=options)
 
 
-def parse_announcements(announcements: list[Announcement], existing_ids: list[int]) -> list[Announcement]:
+def parse_announcements(
+    announcements: list[Announcement],
+    existing_ids: list[int],
+) -> list[Announcement]:
     """Parse each announcement separately and get extra info."""
 
     driver = get_webdriver()
@@ -145,6 +149,23 @@ def parse_announcements(announcements: list[Announcement], existing_ids: list[in
     return out
 
 
+@lru_cache(maxsize=1)
+def get_all_announcements(descending: bool = True) -> list[AnnouncementModel]:
+    """Get all announcement objects sorted in the given order."""
+
+    # Get all announcement primary keys
+    # and convert each one to an object one-by-one.
+    # Looks like redis-om does not support querying
+    # for a specific amount of objects, so no other way to do this
+    pks = AnnouncementModel.all_pks()
+    announcements = [AnnouncementModel.get(pk) for pk in pks]
+
+    # Sort announcements to make sure we get the latest announcements first
+    announcements = sorted(announcements, key=lambda ann: ann.id, reverse=descending)
+
+    return announcements
+
+
 def populate_cache(ids: list[int]) -> None:
     """Background job to populate Redis cache."""
 
@@ -159,3 +180,5 @@ def populate_cache(ids: list[int]) -> None:
         model.save()
 
         print(f"Saved model {ann}")
+
+    get_all_announcements.cache_clear()
