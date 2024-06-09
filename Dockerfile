@@ -39,4 +39,4 @@ ENV PATH="/app/.venv/bin:${PATH}"
 COPY --from=build /app /app
 WORKDIR /app
 
-ENTRYPOINT [ "uvicorn", "cab.main:app", "--host", "0.0.0.0", "--port", "8000" ]
+ENTRYPOINT [ "uvicorn", "cab.main:app", "--host", "0.0.0.0", "--port", "8001" ]
