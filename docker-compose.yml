@@ -1,6 +1,7 @@
 services:
   cab:
     container_name: cab
+    restart: always
     network_mode: host
     build:
       context: .
@@ -15,6 +16,7 @@ services:
   redis:
     image: redis:6.2-alpine
     container_name: cab-redis
+    restart: always
     network_mode: host
     ports:
       - "6379:6379"
@@ -29,6 +31,7 @@ services:
   chrome:
     image: selenium/standalone-chrome:latest
     container_name: cab-chrome
+    restart: always
     hostname: chrome
     privileged: true
     shm_size: 2g
