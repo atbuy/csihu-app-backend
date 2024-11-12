@@ -1,22 +1,26 @@
 [tool.poetry]
 name = "cab"
-version = "0.1.0"
+version = "0.2.0"
 description = "FastAPI backend to periodically parse CSIHU announcements"
-authors = ["atbuy <filip1253@gmail.com>"]
+authors = ["atbuy <atbuy@atbuy.dev>"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-fastapi = "^0.110.0"
-uvicorn = {extras = ["standard"], version = "^0.28.0"}
-pydantic-settings = "^2.0.3"
-requests = "^2.31.0"
-beautifulsoup4 = "^4.12.3"
-lxml = "^5.1.0"
-redis-om = "^0.2.1"
-selenium = "^4.21.0"
+python = "^3.12"
+fastapi = "0.115.4"
+uvicorn = {extras = ["standard"], version = "0.32.0"}
+pydantic-settings = "2.6.1"
+requests = "2.32.3"
+beautifulsoup4 = "4.12.3"
+lxml = "5.3.0"
+redis-om = "0.3.3"
+selenium = "4.26.1"
 
+
+[tool.poetry.group.dev.dependencies]
+ruff = "0.7.3"
+pre-commit = "4.0.1"
 
 [build-system]
 requires = ["poetry-core"]
