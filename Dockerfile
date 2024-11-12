@@ -1,4 +1,4 @@
-FROM python:3.11-alpine AS python
+FROM python:3.12-alpine AS python
 
 # Python configurations
 ENV PYTHONBUFFERED=true
@@ -8,7 +8,7 @@ RUN apk update
 
 
 # Install package in second stage
-FROM python as build
+FROM python AS build
 
 RUN apk add --no-cache gcc musl-dev curl libffi-dev
 
@@ -23,10 +23,10 @@ ENV PATH="$POETRY_HOME/bin:${PATH}"
 
 # Upgrade pip and setuptools
 RUN pip install --upgrade pip setuptools wheel && \
-    # Install poetry
-    pip install poetry && \
-    # Install dependencies from poetry lock file
-    poetry install --no-dev --no-interaction --no-ansi -vvv
+  # Install poetry
+  pip install poetry && \
+  # Install dependencies from poetry lock file
+  poetry install --no-dev --no-interaction --no-ansi -vvv
 
 
 # Run app in third stage
